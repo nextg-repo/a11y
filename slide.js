@@ -74,7 +74,6 @@
   const screenChecker = matchMedia("(min-width:1025px)");
   window.addEventListener("resize",()=>{
     isDesktop = screenChecker.matches;
-    
   });
   
 
@@ -171,7 +170,7 @@
         if (firstEntry) { 
           firstEntry = false;
           pages[storedPage].scrollIntoView({block:"center"})
-          inputPage.value = storedPage;
+          inputPage.value = storedPage+1;
           break;
         }
         if(intersection.intersectionRatio != 0 && isDesktop) {
