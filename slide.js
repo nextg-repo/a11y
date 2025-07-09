@@ -94,13 +94,13 @@
       if(e.deltaY > 0) {
         clearTimeout(scrollTickTimer);
         scrollTickTimer = setTimeout(()=>{
-          previousPage();
+          nextPage();
         },200)
       }
       else if(e.deltaY < 0) {
         clearTimeout(scrollTickTimer);
         scrollTickTimer = setTimeout(()=>{
-          nextPage();
+          previousPage();
         },200)
       }
     }
