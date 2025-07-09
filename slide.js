@@ -66,7 +66,7 @@
   let storedPage = getCurrentPage();
   
   if(isNaN(storedPage)) {
-    localStorage.setItem("introduce-a11y-last-page",0);
+    localStorage.setItem("introduce-a11y-last-page",1);
   }
   const wrapper = document.querySelector(".page-wrapper");
   const pages = [...wrapper.querySelectorAll("slide-page")];
