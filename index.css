@@ -1,0 +1,194 @@
+@font-face {
+  font-family: "나눔스퀘어 네오";
+  src: url("./NanumSquare_Variable.woff2");
+}
+/* [init] */
+*{padding: 0; margin:0; box-sizing: border-box;}
+html, body { overflow: hidden; width: 100%; height: 100%; position: relative;}
+
+:root {
+  font-family: "나눔 스퀘어 네오";
+  color-scheme: light dark;
+  --glass:light-dark(#fff,#000);
+  --text:light-dark(#252525, #efefef);
+  --body:light-dark(#efefef, #252525);
+  --page:light-dark(#fff,#333);
+  --link:light-dark(#0E3178,#489EFA);
+  letter-spacing: 0.04em;
+  word-break: keep-all;
+  word-wrap: break-word;
+  line-height: 1.7;
+  --direction:row;
+  --page-width:90vw;
+  --page-height:90vh;
+  --page-overflow:hidden;
+  --scroll-axis:x;
+  --scroll-align:center;
+  --wrapper-overflow-y:hidden;
+  --wrapper-overflow-x:auto;
+  --cover-size:100%;
+  font-size: 18px;
+  color: var(--text);
+  @media (max-width:1024px) {
+    font-size: 16px;
+    --scroll-axis:y;
+    --scroll-align:start;
+    --direction:column;
+    --page-width:100%;
+    --page-height:auto;
+    --page-overflow:visible;
+    --wrapper-overflow-y:auto;
+    --wrapper-overflow-x:hidden;
+  }
+}
+
+.dark-only {
+   display: none;
+} 
+@media (prefers-color-scheme: dark) {
+  .dark-only {
+    display: initial;
+  }
+  .light-only {
+     display: none;
+   } 
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+.page-wrapper {
+  background-color:var(--body);
+  scrollbar-width: 0;
+  scroll-snap-type: var(--scroll-axis) mandatory;
+  width: 100%; height: 100%;
+  display: flex; flex-direction: var(--direction);
+  align-items: center;
+  overflow: hidden;
+  overflow-y:var(--wrapper-overflow-y);
+  overflow-x:var(--wrapper-overflow-x);
+  position: relative;
+}
+header, main {
+  padding-inline: 5%;
+  position: relative;
+  display: flex; flex-wrap: nowrap;
+  flex-direction: var(--direction);
+  align-items: center;
+  height: auto;
+
+}
+.flex-content {
+  display: flex;
+  width: 100%;
+  min-height: 100%;
+  padding:1.5rem;
+  flex-direction: column;
+  align-items: center;
+  &.v-center {
+    justify-content: center;
+  }
+}
+slide-page {
+  width: 100vw; height: 100%;
+  overflow: var(--page-overflow);
+  scroll-snap-align:var(--scroll-align);
+  &::part(inner) {
+    box-sizing: border-box;
+    width: var(--page-width);
+    height: var(--page-height);
+    overflow: var(--page-overflow);
+    padding: 1.5rem;
+    border-radius: 3em;
+    background-color: var(--page);
+    @media (max-width:1024px) {
+      min-height: 50vh;
+      background-color: transparent;
+    }
+  }
+  p, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, pre, blockquote, section, article, aside {
+    width: 100%;
+    margin-block: 0.5em;
+  }
+  ol, ul { padding-left: 2em;}
+  h1 { font-size: 2.5rem;}
+  h2 { font-size: 2rem;}
+  h3 { font-size: 1.75rem; font-weight: 400; text-decoration: underline; text-underline-offset: 0.2em; }
+  dt { font-weight: bold;}
+  p, li, dt, dd { 
+    font-size: 1.2rem;
+    margin-bottom: 0.5em;
+  }
+}
+.cover {
+  overflow: hidden;
+  h1 {
+    text-align: center;
+  }
+  .cover-logo {
+    position: absolute;
+    width: 7.5em;
+    right:2em;
+    bottom: 2em;
+  }
+}
+
+.controller {
+  background: linear-gradient(to top,
+    color-mix(in srgb, var(--glass) 5%, transparent) 70%,
+    color-mix(in srgb, var(--text) 10%, transparent)
+  ),
+  linear-gradient( to bottom,
+    color-mix(in srgb, var(--glass) 5%, transparent)  70%,
+    color-mix(in srgb, var(--text) 10%, transparent)
+  );
+  display: flex;
+  position: fixed; top:0; left: 50%; transform: translateX(-50%);
+  padding: 0.5em; z-index: 99; border-radius: 1em;
+  border: solid 0.1em color-mix(in srgb, var(--text) 30%, transparent);
+  width: 95%;
+  backdrop-filter: blur(3px);
+  button {
+    appearance: none;
+    background:radial-gradient(
+      color-mix(in srgb, var(--glass) 10%, transparent) 2.5%,
+      color-mix(in srgb, var(--text) 30%, transparent)
+    );
+    border:solid 0.1em color-mix(in srgb, var(--text) 20%, transparent);
+    backdrop-filter:blur(5px);
+    height: 2rem;
+    width:  2rem;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    &#prev-slide, &#next-slide { font-family: monospace;}  
+  }
+  .page-input {
+    margin-inline:auto;
+    #page-input { 
+      height: 2.5em;
+      width: 3em;
+      border:solid 0.1em color-mix(in srgb, var(--text) 20%, transparent);
+      background: linear-gradient(to top,
+        color-mix(in srgb, var(--glass) 10%, transparent) 70%,
+        color-mix(in srgb, var(--text) 15%, transparent)
+      ),
+      linear-gradient( to bottom,
+        color-mix(in srgb, var(--glass) 10%, transparent)  70%,
+        color-mix(in srgb, var(--text) 15%, transparent)
+      );
+    }
+    button { border-radius: .5em; }
+  }
+}
+a:link {color: var(--link); font-weight: bold;}
+a:visited {
+  color:color-mix(in srgb, var(--link), gray 60%);
+}
+
+@media (max-width:1024px) {
+  .desktop-only {
+      display: none;
+  }
+}
