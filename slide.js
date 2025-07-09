@@ -1,9 +1,6 @@
 (()=>{
   class Page extends HTMLElement {
-
-
     constructor(){ super(); }
-
     set label(v){
       if(v) {
         this.setAttribute("label",v);
@@ -57,7 +54,7 @@
     }
   }
   customElements.define("slide-page",Page);
-  let isDesktop = false;
+  let isDesktop = true;
   let scrollTickTimer = 0;
 
   const getCurrentPage = ()=>{
@@ -66,7 +63,7 @@
   let storedPage = getCurrentPage();
   
   if(isNaN(storedPage)) {
-    localStorage.setItem("introduce-a11y-last-page",1);
+    localStorage.setItem("introduce-a11y-last-page",0);
   }
   const wrapper = document.querySelector(".page-wrapper");
   const pages = [...wrapper.querySelectorAll("slide-page")];
@@ -74,8 +71,10 @@
     page.label = `${index+1} 페이지`;
   })
   let firstEntry = true;
-  matchMedia("(min-width:1025px)").addEventListener("change",(e)=>{
-    isDesktop = e.matches;
+  const screenChecker = matchMedia("(min-width:1025px)");
+  window.addEventListener("resize",()=>{
+    isDesktop = screenChecker.matches;
+    
   });
   
 
@@ -86,7 +85,7 @@
     } else {
       pages[pageIndex].scrollIntoView({block:"center",behavior:smooth ? "smooth" : "instant"})
     }
-    storedPage = pageIndex; // update store
+    storedPage = pageIndex;
     inputPage.value = storedPage+1;
   }
   const previousPage = ()=>{
@@ -96,6 +95,7 @@
     setPage(storedPage+1 < pages.length ? storedPage+1 : pages.length-1)
   }
   window.addEventListener("wheel",(e)=>{
+    
     if(isDesktop) {
       if(e.deltaY > 0) {
         clearTimeout(scrollTickTimer);
@@ -145,8 +145,8 @@
     nextPage();
   })
   window.addEventListener("keydown",(e)=>{
-
     if(isDesktop && e.target.tagName !== "INPUT") {
+      
       switch(e.code) {
         case "ArrowLeft":
           e.preventDefault();
@@ -185,5 +185,5 @@
     },{root:wrapper,threshold:1});
     io.observe(page.shadowRoot.querySelector(".page-inner"));
   });
-  
+  window.dispatchEvent(new Event("resize"));
 })();
