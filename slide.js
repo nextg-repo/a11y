@@ -62,20 +62,15 @@
   }
   let storedPage = getCurrentPage();
   
-  if(isNaN(storedPage)) {
-    localStorage.setItem("introduce-a11y-last-page",0);
-  }
+  if(isNaN(storedPage)) { localStorage.setItem("introduce-a11y-last-page",0); }
   const wrapper = document.querySelector(".page-wrapper");
   const pages = [...wrapper.querySelectorAll("slide-page")];
-  pages.forEach((page,index)=>{
-    page.label = `${index+1} 페이지`;
-  })
+  pages.forEach((page,index)=>{ page.label = `${index+1} 페이지`; });
   let firstEntry = true;
   const screenChecker = matchMedia("(min-width:1025px)");
   window.addEventListener("resize",()=>{
     isDesktop = screenChecker.matches;
   });
-  
 
   const setPage = (pageIndex, smooth=true)=>{
     if(pageIndex < 0) {
@@ -170,7 +165,6 @@
         if (firstEntry) { 
           firstEntry = false;
           pages[storedPage].scrollIntoView({block:"center"})
-          inputPage.value = storedPage+1;
           break;
         }
         if(intersection.intersectionRatio != 0 && isDesktop) {
@@ -180,6 +174,7 @@
           btnPreviousPage.disabled = getCurrentPage() == 0;
           btnNextPage.disabled = getCurrentPage() == pages.length-1;
         }
+        inputPage.value = storedPage+1;
       }
     },{root:wrapper,threshold:1});
     io.observe(page.shadowRoot.querySelector(".page-inner"));
