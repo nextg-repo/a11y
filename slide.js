@@ -8,6 +8,12 @@
         this.removeAttribute("label");
       }
     }
+    get pageInner( ) {
+      return this.shadowRoot.querySelector(".page-inner");
+    }
+    get isScrollEnded( ){
+      return this.pageInner.offsetHeight + this.pageInner.scrollTop >= this.pageInner.scrollHeight;
+    }
     get label(){
       return this.getAttribute("label");
     }
@@ -88,23 +94,6 @@
   const nextPage = ()=>{
     setPage(storedPage+1 < pages.length ? storedPage+1 : pages.length-1)
   }
-  window.addEventListener("wheel",(e)=>{
-    
-    if(isDesktop) {
-      if(e.deltaY > 0) {
-        clearTimeout(scrollTickTimer);
-        scrollTickTimer = setTimeout(()=>{
-          nextPage();
-        },200)
-      }
-      else if(e.deltaY < 0) {
-        clearTimeout(scrollTickTimer);
-        scrollTickTimer = setTimeout(()=>{
-          previousPage();
-        },200)
-      }
-    }
-  });
 
   const btnPreviousPage = document.getElementById("prev-slide");
   const btnNextPage = document.getElementById("next-slide");
