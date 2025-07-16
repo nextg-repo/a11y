@@ -94,12 +94,13 @@
   const nextPage = ()=>{
     setPage(storedPage+1 < pages.length ? storedPage+1 : pages.length-1)
   }
-
+  const indPageLength = document.getElementById("page-length");
   const btnPreviousPage = document.getElementById("prev-slide");
   const btnNextPage = document.getElementById("next-slide");
   const btnMove = document.getElementById("move");
   const inputPage = document.getElementById("page-input");
   let val = "";
+  indPageLength.innerHTML = pages.length;
   inputPage.addEventListener("input",(e)=>{
     if(e.inputType !== "deleteContentBackward" && e.inputType !== "deleteContentForward") {
       if(!/[0-9]+/.test(e.data)) {
